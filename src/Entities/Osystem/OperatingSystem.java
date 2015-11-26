@@ -1,4 +1,4 @@
-package Entities.Equipment;
+package Entities.Osystem;
 
 public abstract class OperatingSystem {
 
@@ -11,5 +11,12 @@ public abstract class OperatingSystem {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	
 	
 }
