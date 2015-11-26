@@ -11,4 +11,5 @@ public abstract class TerminalOs extends OperatingSystem {
 	public void setTtl(int ttl) {
 		this.ttl = ttl;
 	}
+	
 }
