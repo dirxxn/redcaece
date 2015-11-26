@@ -1,5 +1,10 @@
 package Entities.Osystem;
 
+import java.util.ArrayList;
+
+import Entities.Equipment.Equipment;
+import Entities.Packages.Packet;
+
 public abstract class TerminalOs extends OperatingSystem {
 
 	protected int ttl;
@@ -10,6 +15,10 @@ public abstract class TerminalOs extends OperatingSystem {
 
 	public void setTtl(int ttl) {
 		this.ttl = ttl;
+	}
+	
+	public void senPacket(Packet packet, ArrayList<Equipment> equipments){
+		// TODO
 	}
 	
 }

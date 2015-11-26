@@ -1,6 +1,11 @@
 package Entities.Osystem;
 
-public abstract class OperatingSystem {
+import java.util.List;
+
+import Entities.Equipment.Equipment;
+import Entities.Packages.Packet;
+
+public abstract class OperatingSystem implements ISender{
 
 	protected String name;
 	protected String version;
@@ -18,5 +23,8 @@ public abstract class OperatingSystem {
 		this.version = version;
 	}
 	
+	public void senPacket(Packet packet, List<Equipment> equipments){
+		// TODO 
+	}
 	
 }
