@@ -5,9 +5,10 @@ import Entities.Network.IPAddressV4;
 /**
  * Created by efridman on 14/11/15.
  */
-public abstract class Packet {
+public abstract class Packet<PacketType> {
 	private IPAddressV4 destination;
 	private IPAddressV4 source;
+	private PacketType serviceType;
 	private int ttl;
 	private String text;
 
@@ -43,4 +44,11 @@ public abstract class Packet {
 		this.text = text;
 	}
 
+	public PacketType getServiceType() {
+		return serviceType;
+	}
+
+	public void setServiceType(PacketType serviceType) {
+		this.serviceType = serviceType;
+	}
 }
