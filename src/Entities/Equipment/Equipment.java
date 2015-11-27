@@ -1,9 +1,9 @@
 package Entities.Equipment;
 
 import java.util.ArrayList;
-
 import Entities.Network.IMessaging;
 import Entities.Network.IPAddressV4;
+import Exceptions.AssociateEquipmentError;
 
 /**
  * Created by efridman on 14/11/15.
@@ -21,11 +21,9 @@ public abstract class Equipment implements IMessaging {
 		this.associatedIp = associatedIp;
 	}
 	
-	public boolean associateEquipment(Equipment equipment)
-	{
+	public void associateEquipment(Equipment equipment) throws AssociateEquipmentError{
 		this.equipments.add(equipment);
-		equipment.equipments.add(this);
-		return true;
+		equipment.associateEquipment(this);
 	}
 
 }

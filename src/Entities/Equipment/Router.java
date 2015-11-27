@@ -15,11 +15,10 @@ import Entities.Packages.Who;
 /**
  * Created by efridman on 14/11/15.
  */
-public class Router extends Equipment {
+public class Router extends NetEquipment {
 
 	private Map<Integer, IPAddressV4> routingTable;
 	private Integer defaultPort; // boca por defecto?
-	private int connectionsNumber;
 	private NetworkOs operatingSystem;
 
 	public void updateRoutingTable(Integer port, IPAddressV4 newIp) {
@@ -61,5 +60,6 @@ public class Router extends Equipment {
 		// TODO Auto-generated method stub
 		
 		
-	}	
+	}
+
 }
