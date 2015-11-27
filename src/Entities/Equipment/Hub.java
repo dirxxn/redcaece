@@ -1,14 +1,6 @@
 package Entities.Equipment;
 
-import java.util.ArrayList;
-
-import Entities.Osystem.ISender;
-import Entities.Packages.ICMPRequest;
-import Entities.Packages.ICMPResponse;
 import Entities.Packages.Packet;
-import Entities.Packages.RoutePacket;
-import Entities.Packages.Sendmsg;
-import Entities.Packages.Who;
 
 /**
  * Created by efridman on 14/11/15.
@@ -21,11 +13,11 @@ public class Hub extends Equipment{
 		/*TODO 
 		 * Cuando recibe un paquete lo reenvía a todos los equipos asociados.
 		 * */
-		this.senPacket(packet);
+		this.sendPacket(packet);
 	}
 
 	@Override
-	public void senPacket(Packet packet) {
+	public void sendPacket(Packet packet) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -49,7 +49,7 @@ public class Router extends Equipment {
 	}
 
 	@Override
-	public void senPacket(Packet packet) {
+	public void sendPacket(Packet packet) {
 		// TODO Auto-generated method stub
 		
 	}

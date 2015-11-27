@@ -24,7 +24,7 @@ public abstract class OperatingSystem{
 		data = data + "Version: " + version + "\n";
 		return data;
 	}
-	//public void senPacket(Packet packet, List<Equipment> equipments){
+	//public void sendPacket(Packet packet, List<Equipment> equipments){
 		// TODO 
 	//}
 	

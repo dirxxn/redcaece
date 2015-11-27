@@ -16,7 +16,7 @@ public abstract class TerminalOs extends OperatingSystem {
 		this.ttl = ttl;
 	}
 	
-	/*public void senPacket(Packet packet, ArrayList<Equipment> equipments){
+	/*public void sendPacket(Packet packet, ArrayList<Equipment> equipments){
 		for (Equipment equipment : equipments) {
 
 		}

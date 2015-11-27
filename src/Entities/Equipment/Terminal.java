@@ -4,7 +4,6 @@ import Entities.Osystem.TerminalOs;
 import Entities.Packages.ICMPRequest;
 import Entities.Packages.ICMPResponse;
 import Entities.Packages.Packet;
-import Entities.Packages.RoutePacket;
 import Entities.Packages.Sendmsg;
 import Entities.Packages.Who;
 import Entities.Network.IPAddressV4;
@@ -54,7 +53,7 @@ public class Terminal extends Equipment {
 			pktResponse.setDestination(packet.getSource());
 			pktResponse.setSource(associatedIp);
 			pktResponse.setText(packet.getText()); // no se si esto esta bien?
-			this.senPacket(pktResponse);
+			this.sendPacket(pktResponse);
 			
 		}
 		
@@ -84,7 +83,7 @@ public class Terminal extends Equipment {
 			pktSendmsg.setSource(associatedIp);
 			pktSendmsg.setDestination(packet.getSource());
 			pktSendmsg.setText(this.operatingSystem.getDataVersion());
-			this.senPacket(pktSendmsg);
+			this.sendPacket(pktSendmsg);
 		}
 		
 	}
@@ -106,7 +105,7 @@ public class Terminal extends Equipment {
 	}
 
 	@Override
-	public void senPacket(Packet packet) {
+	public void sendPacket(Packet packet) {
 		// TODO Auto-generated method stub
 		for (Equipment equipment : equipments) {
 			equipment.receivePacket(packet);

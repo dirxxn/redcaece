@@ -2,14 +2,13 @@ package Entities.Equipment;
 
 import java.util.ArrayList;
 
-import Entities.Osystem.ISender;
-import Entities.Packages.Packet;
+import Entities.Network.IMessaging;
 
 
 /**
  * Created by efridman on 14/11/15.
  */
-public abstract class Equipment implements  ISender {
+public abstract class Equipment implements IMessaging {
 	
 	protected ArrayList<Equipment> equipments = new ArrayList<Equipment>();
 	
