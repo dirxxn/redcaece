@@ -88,7 +88,7 @@ public class Terminal extends Equipment {
 		
 	}
 	
-	public void receivePacket(PaquSendmsg packet){
+	public void receivePacket(Sendmsg packet){
 		/*TODO 
 		 * entonces imprime por pantalla el mensaje de texto del paquete
 		 * */
@@ -99,7 +99,7 @@ public class Terminal extends Equipment {
 	}
 
 	@Override
-	public void receivePacket(Packet<T> packet) {
+	public void receivePacket(Packet packet) {
 		// TODO Auto-generated method stub
 		
 	}
