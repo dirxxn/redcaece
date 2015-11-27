@@ -4,7 +4,7 @@ package Entities.Osystem;
 import Entities.Equipment.Equipment;
 import Entities.Packages.Packet;
 
-public abstract class TerminalOs extends OperatingSystem {
+public class TerminalOs extends OperatingSystem {
 
 	protected int ttl;
 
@@ -15,17 +15,14 @@ public abstract class TerminalOs extends OperatingSystem {
 	public void setTtl(int ttl) {
 		this.ttl = ttl;
 	}
-	
-	/*public void sendPacket(Packet packet, ArrayList<Equipment> equipments){
-		for (Equipment equipment : equipments) {
 
-		}
-	}*/
-	
 	@Override
 	public String getDataVersion(){
-		String data = super.getDataVersion();
-		data = "TTL: " + ttl + "\n";
+		String data = "Datos del sistema operativo \n";
+		data = data + "Nombre: " + getName() + "\n";
+		data = data + "Version: " + getVersion() + "\n";
+		data = data + "TTL: " + getTtl() + "\n";
+		data = data + "Tipo: Terminal \n";
 		return data;
 	}
 	

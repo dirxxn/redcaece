@@ -2,7 +2,9 @@ package Entities.Equipment;
 
 import java.util.Map;
 import Entities.Network.IPAddressV4;
+import Entities.Network.Network;
 import Entities.Osystem.NetworkOs;
+import Entities.Osystem.OperatingSystem;
 import Entities.Packages.ICMPRequest;
 import Entities.Packages.ICMPResponse;
 import Entities.Packages.Packet;
