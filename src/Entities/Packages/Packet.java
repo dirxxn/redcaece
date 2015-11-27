@@ -5,7 +5,7 @@ import Entities.Network.IPAddressV4;
 /**
  * Created by efridman on 14/11/15.
  */
-public abstract class Packet {
+public abstract class Packet<T> {
 	private IPAddressV4 destination;
 	private IPAddressV4 source;
 	private int ttl;
