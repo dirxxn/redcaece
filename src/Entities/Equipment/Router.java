@@ -3,7 +3,11 @@ package Entities.Equipment;
 import java.util.Map;
 import Entities.Network.IPAddressV4;
 import Entities.Osystem.NetworkOs;
+import Entities.Packages.ICMPRequest;
+import Entities.Packages.ICMPResponse;
+import Entities.Packages.Packet;
 import Entities.Packages.RoutePacket;
+import Entities.Packages.Sendmsg;
 import Entities.Packages.Who;
 
 /**
@@ -44,4 +48,15 @@ public class Router extends Equipment {
 		 * */
 	}
 
+	@Override
+	public void senPacket(Packet packet) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void receivePacket(Packet packet) {
+		// TODO Auto-generated method stub
+		
+	}	
 }

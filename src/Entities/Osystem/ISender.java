@@ -1,12 +1,9 @@
 package Entities.Osystem;
 
-import java.util.ArrayList;
-import Entities.Equipment.Equipment;
-import Entities.Packages.Packet;
+import Entities.Packages.*;
 
 public interface ISender {
 
-	public void senPacket(Packet packet, ArrayList<Equipment> equipments);
-	
-	
+	public void senPacket(Packet packet);
+	public void receivePacket(Packet packet);	
 }

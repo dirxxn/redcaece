@@ -57,6 +57,26 @@ public class IPAddressV4 {
             throw new Exception(String.format("No se puede crear IP, el fourth octeto tiene un valor invalido: {0}",third));
         }
     }
+    
+    @Override
+    public boolean equals(Object obj){
+    	boolean equal = false;
+    	if(obj != null && obj.getClass().equals(getClass())){
+    		IPAddressV4 ip = (IPAddressV4)obj;
+    		equal = this.firstOctet == ip.firstOctet;
+    		equal = equal && this.secondOctet == ip.secondOctet;
+    		equal = equal && this.thirdOctet == ip.thirdOctet;
+    		equal = equal && this.fourthOctet == ip.fourthOctet;    		
+    	}
+    	return equal;
+    }
+    
+    public boolean sameNetwork(IPAddressV4 ip){
+    	boolean isSame = this.firstOctet == ip.firstOctet;
+		isSame = isSame && this.secondOctet == ip.secondOctet;
+		isSame = isSame && this.thirdOctet == ip.thirdOctet;
+    	return isSame;
+    }
 
 
 }

@@ -3,6 +3,8 @@ package Entities.Equipment;
 import Entities.Osystem.TerminalOs;
 import Entities.Packages.ICMPRequest;
 import Entities.Packages.ICMPResponse;
+import Entities.Packages.Packet;
+import Entities.Packages.RoutePacket;
 import Entities.Packages.Sendmsg;
 import Entities.Packages.Who;
 import Entities.Network.IPAddressV4;
@@ -40,34 +42,78 @@ public class Terminal extends Equipment {
 		this.ed = ed;
 	}
 
-	public void receivePaket(ICMPRequest packet){
+	
+	public void receivePacket(ICMPRequest packet){
 		/* TODO falta resto de la logica
 		 * ICMPRequest entonces le envía a la dirección de red del remitente un tipo paquete
 			ICMPResponse. 
 		 */
-		this.operatingSystem.senPacket(packet, this.equipments);
+		if(packet.getDestination().equals(this.associatedIp)){
+			
+			ICMPResponse pktResponse = new ICMPResponse();
+			pktResponse.setDestination(packet.getSource());
+			pktResponse.setSource(associatedIp);
+			pktResponse.setText(packet.getText()); // no se si esto esta bien?
+			this.senPacket(pktResponse);
+			
+		}
+		
 	}
 	
-	public void receivePaket(ICMPResponse packet){
+	public void receivePacket(ICMPResponse packet){
 		/* TODO 
 		 * entonces imprime por pantalla los datos del paquete recibido.
 		 * 
 		 * */
+		if(packet.getDestination().equals(this.associatedIp)){
+			
+			System.out.println("------------ Paquete ICMPResponse Recibido ------------");
+			System.out.println("Origen: " +  packet.getSource() + " - Destino: " + packet.getDestination());
+			System.out.println("Datos: " + packet.getText());			
+		}
 	}
 	
-	public void receivePaket(Who packet){
+	public void receivePacket(Who packet){
 		/*TODO 
 		 * entonces le envía a la dirección de red remitente un paquete tipo Sendmsg con los datos
 			de su sistema operativos. Por ejemplo, nombre versión
 		 * */
-		this.operatingSystem.senPacket(packet, this.equipments);
+		if(packet.getDestination().equals(this.associatedIp)){			
+			
+			Sendmsg pktSendmsg = new Sendmsg();
+			pktSendmsg.setSource(associatedIp);
+			pktSendmsg.setDestination(packet.getSource());
+			pktSendmsg.setText(this.operatingSystem.getDataVersion());
+			this.senPacket(pktSendmsg);
+		}
+		
 	}
 	
-	public void receivePaket(Sendmsg packet){
+	public void receivePacket(Sendmsg packet){
 		/*TODO 
 		 * entonces imprime por pantalla el mensaje de texto del paquete
 		 * */
+		if(packet.getDestination().equals(this.associatedIp)){
+			System.out.println("------------ Paquete Sendmsg Recibido ------------");
+			System.out.println("Datos: " + packet.getText());
+		}
 	}
+
+	@Override
+	public void receivePacket(Packet packet) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void senPacket(Packet packet) {
+		// TODO Auto-generated method stub
+		for (Equipment equipment : equipments) {
+			equipment.receivePacket(packet);
+		}
+		
+	}
+	
 	
 	
 }

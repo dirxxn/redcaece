@@ -1,6 +1,5 @@
 package Entities.Osystem;
 
-import java.util.ArrayList;
 
 import Entities.Equipment.Equipment;
 import Entities.Packages.Packet;
@@ -17,8 +16,17 @@ public abstract class TerminalOs extends OperatingSystem {
 		this.ttl = ttl;
 	}
 	
-	public void senPacket(Packet packet, ArrayList<Equipment> equipments){
-		// TODO
+	/*public void senPacket(Packet packet, ArrayList<Equipment> equipments){
+		for (Equipment equipment : equipments) {
+
+		}
+	}*/
+	
+	@Override
+	public String getDataVersion(){
+		String data = super.getDataVersion();
+		data = "TTL: " + ttl + "\n";
+		return data;
 	}
 	
 }
