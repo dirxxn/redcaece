@@ -2,6 +2,9 @@ package Entities.Equipment;
 
 import Entities.Osystem.TerminalOs;
 import Entities.Packages.*;
+
+import java.util.Iterator;
+
 import Entities.Network.IPAddressV4;
 
 /**
@@ -9,8 +12,7 @@ import Entities.Network.IPAddressV4;
  */
 public class Terminal extends Equipment {
 
-	private TerminalOs operatingSystem;
-	private IPAddressV4 associatedIp;
+	private TerminalOs operatingSystem;	
 	private IPAddressV4 ed;
 
 	public TerminalOs getOperatingSystem() {
@@ -19,15 +21,7 @@ public class Terminal extends Equipment {
 
 	public void setOperatingSystem(TerminalOs operatingSystem) {
 		this.operatingSystem = operatingSystem;
-	}
-
-	public IPAddressV4 getAssociatedIp() {
-		return associatedIp;
-	}
-
-	public void setAssociatedIp(IPAddressV4 associatedIp) {
-		this.associatedIp = associatedIp;
-	}
+	}	
 
 	public IPAddressV4 getEd() {
 		return ed;
@@ -40,27 +34,45 @@ public class Terminal extends Equipment {
 
 	@Override
 	public void receivePacket(Packet<PacketType> packet) {
-		String message = "";
-		PacketType responseType = packet.getServiceType().getResponse();
-		if(packet.getServiceType().isRequest()){
-			if(responseType instanceof Who){
-				message = operatingSystem.getDataVersion();
+		if(packet.getDestination().equals(associatedIp)){
+			String message = "";
+			PacketType responseType = packet.getServiceType().getResponse();
+			if(packet.getServiceType().isRequest()){
+				if(responseType instanceof Who){
+					message = operatingSystem.getDataVersion();
+				}
+				Packet<PacketType> response = new ServicePacket<PacketType>(packet.getDestination(),packet.getSource(),responseType,packet.getTtl(),message);
+				sendPacket(response);
+			}else{
+				message = packet.getText();
+				if(responseType instanceof ICMPResponse){
+					message = packet.toString();
+				}
+				System.out.println(message);
 			}
-			Packet<PacketType> response = new ServicePacket<PacketType>(packet.getDestination(),packet.getSource(),responseType,packet.getTtl(),message);
-		}else{
-			message = packet.getText();
-			if(responseType instanceof ICMPResponse){
-				message = packet.toString();
-			}
-			System.out.println(message);
 		}
 	}
 
 	@Override
 	public void sendPacket(Packet<PacketType> packet) {
 		// TODO Auto-generated method stub
+		boolean exists = false;
+		Packet<PacketType> pktRequest = packet;
 		for (Equipment equipment : equipments) {
-			equipment.receivePacket(packet);
+			if(equipment.associatedIp.sameNetwork(packet.getDestination())){
+				exists = true;
+				break;
+			}
+		}
+		
+		if(!exists){
+			pktRequest = new RoutePacket<PacketType>(this.associatedIp, this.ed, packet.getServiceType(), 
+					this.operatingSystem.getTtl(),"", packet);	
+			
+		}
+		
+		for (Equipment equipment : equipments) {
+			equipment.receivePacket(pktRequest);
 		}		
 	}
 

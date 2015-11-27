@@ -8,4 +8,10 @@ public class Sendmsg extends PacketType {
     public Sendmsg(){
         this.setIsRequest(false);
     }
+
+	@Override
+	public PacketType getResponse() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
