@@ -60,5 +60,6 @@ public class Router extends Equipment {
 	public void receivePacket(Packet packet) {
 		// TODO Auto-generated method stub
 		
+		
 	}	
 }

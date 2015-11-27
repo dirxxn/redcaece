@@ -55,7 +55,7 @@ public class Terminal extends Equipment {
 
 	@Override
 	public void sendPacket(Packet<PacketType> packet) {
-		// TODO Auto-generated method stub
+		
 		boolean exists = false;
 		Packet<PacketType> pktRequest = packet;
 		for (Equipment equipment : equipments) {
@@ -63,14 +63,12 @@ public class Terminal extends Equipment {
 				exists = true;
 				break;
 			}
-		}
-		
+		}		
 		if(!exists){
 			pktRequest = new RoutePacket<PacketType>(this.associatedIp, this.ed, packet.getServiceType(), 
 					this.operatingSystem.getTtl(),"", packet);	
 			
-		}
-		
+		}		
 		for (Equipment equipment : equipments) {
 			equipment.receivePacket(pktRequest);
 		}		

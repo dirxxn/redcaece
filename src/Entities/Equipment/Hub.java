@@ -5,26 +5,42 @@ import Entities.Packages.Packet;
 /**
  * Created by efridman on 14/11/15.
  */
-public class Hub extends Equipment{
+public class Hub extends Equipment {
 
 	private int connectionsNumber;	
+
+		public Hub(int connectionsNumber) {
+		super();
+		this.connectionsNumber = connectionsNumber;
+	}
 	
-	public void receivePaket(Packet packet){
-		/*TODO 
-		 * Cuando recibe un paquete lo reenvía a todos los equipos asociados.
-		 * */
-		this.sendPacket(packet);
+	public int getconnectionsNumber() {
+		return connectionsNumber;
+	}
+
+	public void setconnectionsNumber(int connectionsNumber) {
+		this.connectionsNumber = connectionsNumber;
 	}
 
 	@Override
 	public void sendPacket(Packet packet) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void receivePacket(Packet packet) {
-		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public boolean associateEquipment(Equipment equipment) {
+		boolean associated = false;
+		if(this.equipments.size() < connectionsNumber)
+		{
+			if(equipment.associateEquipment(this)){
+				this.equipments.add(equipment);				
+				associated = true;
+			}
 		
-	}	
+		}
+		return associated;
+	}
 }
