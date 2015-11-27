@@ -5,4 +5,15 @@ package Entities.Packages;
  */
 public abstract class PacketType {
 
+    private boolean isRequest;
+
+    public boolean isRequest() {
+        return isRequest;
+    }
+
+    public void setIsRequest(boolean isRequest) {
+        this.isRequest = isRequest;
+    }
+
+    public abstract PacketType getResponse();
 }

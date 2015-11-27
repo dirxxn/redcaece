@@ -40,8 +40,20 @@ public class Terminal extends Equipment {
 
 	@Override
 	public void receivePacket(Packet<PacketType> packet) {
-		// TODO Auto-generated method stub
-		
+		String message = "";
+		PacketType responseType = packet.getServiceType().getResponse();
+		if(packet.getServiceType().isRequest()){
+			if(responseType instanceof Who){
+				message = operatingSystem.getDataVersion();
+			}
+			Packet<PacketType> response = new ServicePacket<PacketType>(packet.getDestination(),packet.getSource(),responseType,packet.getTtl(),message);
+		}else{
+			message = packet.getText();
+			if(responseType instanceof ICMPResponse){
+				message = packet.toString();
+			}
+			System.out.println(message);
+		}
 	}
 
 	@Override
