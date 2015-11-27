@@ -21,5 +21,17 @@ public class Hub extends Equipment{
 	@Override
 	public void receivePacket(Packet<PacketType> packet) {
 		this.sendPacket(packet);
+	}
+
+	public int getConnectionsNumber() {
+		return connectionsNumber;
+	}
+
+	public void setConnectionsNumber(int connectionsNumber) {
+		this.connectionsNumber = connectionsNumber;
 	}	
+	
+	private boolean isConnNumberExceeded(){
+		return this.equipments.size() > this.connectionsNumber;
+	}
 }
