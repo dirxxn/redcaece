@@ -26,4 +26,13 @@ public class TerminalOs extends OperatingSystem {
 		return data;
 	}
 	
+	public TerminalOs(){}
+
+	public TerminalOs(String name, String version, int ttl) {
+		super();
+		this.name = name;
+		this.version = version;
+		this.ttl = ttl;
+	}
+	
 }

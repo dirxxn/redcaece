@@ -64,6 +64,14 @@ public class Terminal extends Equipment {
 		}
 	}
 
+	public Terminal(){}
+	
+	public Terminal(TerminalOs operatingSystem, IPAddressV4 ed) {
+		super();
+		this.operatingSystem = operatingSystem;
+		this.ed = ed;
+	}
+
 	public void sendPacket(IPAddressV4 destination, PacketType packetType) {
 		boolean exists = false;
 		Packet packet;

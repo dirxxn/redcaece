@@ -9,7 +9,7 @@ import Entities.Packages.PacketType;
  */
 public class Hub extends NetEquipment {
 
-		public Hub(int connectionsNumber) {
+	public Hub(int connectionsNumber) {
 		super();
 		this.connectionsNumber = connectionsNumber;
 	}
