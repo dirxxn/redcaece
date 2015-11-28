@@ -41,8 +41,7 @@ public class Router extends NetEquipment {
 					return;
 				}
 			}
-		}
-		
+		}		
 	}
 
 
@@ -51,13 +50,14 @@ public class Router extends NetEquipment {
 		ServicePacket responsePacket = new ServicePacket(packet.getDestination(),packet.getSource(),new Sendmsg(),packet.getTtl() -1,"");
 		
 		if(packet instanceof RoutePacket){
-			if (packetReceived(packet)){
-				packet.setTtl(packet.getTtl() -1);
-				this.sendPacket(packet);
+			Packet pktReceived = ((RoutePacket) packet).getPacket();
+			if (packetReceived(pktReceived)){
+				packet.setTtl(pktReceived.getTtl() -1);
+				this.sendPacket(pktReceived);
 			}
 			else{
 				RoutePacket routePacket = new RoutePacket(this.getAssociatedIp(), 
-						packet.getDestination(), packet.getServiceType(),packet.getTtl(), "", packet);
+						packet.getDestination(), packet.getServiceType(),packet.getTtl(), "", pktReceived);
 				defaultEquipment.receivePacket(routePacket);
 				responsePacket.setText("Could not send the packet");
 				responsePacket.setServiceType(new Sendmsg());
@@ -113,8 +113,9 @@ public class Router extends NetEquipment {
 	
 	private boolean packetReceived(Packet packet){
 		boolean received = false;
-		for (Equipment equipment : equipments) {
-				if(equipment.getAssociatedIp().equals(packet.getDestination())){
+		for (Equipment equipment : equipments) {	
+			
+			if(equipment.getAssociatedIp().sameNetwork(packet.getDestination())){
 					received = true;
 					break;
 				} 
