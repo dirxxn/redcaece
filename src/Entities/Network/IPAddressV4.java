@@ -78,5 +78,10 @@ public class IPAddressV4 {
     	return isSame;
     }
 
+    public String toString(){
+        String ip = this.firstOctet + "." + this.secondOctet + "." + this.thirdOctet + "." + this.fourthOctet;
+        return ip;
+    }
+
 
 }

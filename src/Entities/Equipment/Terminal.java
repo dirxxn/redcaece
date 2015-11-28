@@ -44,7 +44,8 @@ public class Terminal extends Equipment {
 				if(responseType instanceof ICMPResponse){
 					message = packet.toString();
 				}
-				System.out.println(message);
+				System.out.println(String.format("La ip: %s recibio el mensaje '%s' de la ip: %s",this.associatedIp.toString(),packet.getText(), packet.getSource().toString()));
+
 			}
 		}
 	}
@@ -69,25 +70,27 @@ public class Terminal extends Equipment {
 		this.ed = ed;
 	}
 
-	public void sendPacket(IPAddressV4 destination, PacketType packetType) {
+	public void sendPacket(IPAddressV4 destination, PacketType packetType,String message) {
 		boolean exists = false;
 		Packet packet;
 		for (Equipment equipment : equipments) {
 			if(equipment.associatedIp.sameNetwork(destination)){
-				packet = new ServicePacket(this.associatedIp,destination,packetType,operatingSystem.getTtl(),"");
+				packet = new ServicePacket(this.associatedIp,destination,packetType,operatingSystem.getTtl(),message);
 				equipment.receivePacket(packet);
 				exists = true;
 			}
 		}
 
 		if(!exists){
-			packet = new ServicePacket(this.associatedIp,this.ed,packetType,operatingSystem.getTtl(),"");
+			packet = new ServicePacket(this.associatedIp,this.ed,packetType,operatingSystem.getTtl(),message);
 			RoutePacket routePacket = new RoutePacket(this.associatedIp, this.ed, packetType,
 					this.operatingSystem.getTtl(),"",packet);
 
 			this.sendPacket(routePacket);
 
 		}
+
+		System.out.println(String.format("La ip: %s envio el mensaje '%s'",this.associatedIp.toString(),message));
 	}
 
 

@@ -78,7 +78,7 @@ public class Main {
 			router.associateEquipment(hub3);
 			
 			
-			serverHub1.sendPacket(ipDesktopHub1, new Sendmsg());
+			serverHub1.sendPacket(ipDesktopHub1, new Sendmsg(),"Vamoooo");
 		}
 		catch(Exception ex){
 			
