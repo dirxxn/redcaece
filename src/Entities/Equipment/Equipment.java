@@ -29,5 +29,13 @@ public abstract class Equipment implements IMessaging {
 	protected void addEquipment(Equipment equipment){
 		this.equipments.add(equipment);
 	}
+	
+	protected ArrayList<IPAddressV4> getAllAssociatedIp(){
+		ArrayList<IPAddressV4> iplst = new ArrayList<IPAddressV4>();
+		for (Equipment e : this.equipments) {
+			iplst.add(e.getAssociatedIp());
+		}		
+		return iplst;
+	}
 
 }

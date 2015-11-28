@@ -21,6 +21,7 @@ public class Router extends NetEquipment {
 	private NavigableMap<Integer, IPAddressV4> routingTable = new TreeMap<>();
 	private Equipment defaultEquipment; // boca por defecto?
 	private NetworkOs operatingSystem;
+	private ArrayList<IPAddressV4> associatedIps = new ArrayList<IPAddressV4>();
 
 	public Router(){
 
@@ -56,17 +57,25 @@ public class Router extends NetEquipment {
 
 	@Override
 	public void receivePacket(Packet packet) {
+		ServicePacket responsePacket = new ServicePacket(packet.getDestination(),packet.getSource(),new Sendmsg(),packet.getTtl() -1,"");
+		
 		if(packet instanceof RoutePacket){
-			this.sendPacket(packet);
-			defaultEquipment.receivePacket(packet);
+			if (associatedIps.contains(packet.getDestination())){
+				packet.setTtl(packet.getTtl() -1);
+				this.sendPacket(packet);
+			}
+			else{
+				responsePacket.setText("No se puede enviar el paquete");
+				defaultEquipment.receivePacket(responsePacket);
+			}
 		}else if(packet.getServiceType() instanceof Who){
-			ServicePacket responsePacket = new ServicePacket(packet.getDestination(),packet.getSource(),new Sendmsg(),packet.getTtl() -1,"");
-			String message = operatingSystem.getDataVersion();
-			message += " Route table: " + routingTable.toString();
-			responsePacket.setText(message);
-			this.sendPacket(responsePacket);
-
-			defaultEquipment.receivePacket(responsePacket);
+			if (associatedIps.contains(packet.getDestination())){
+				String message = operatingSystem.getDataVersion();
+				message += " Route table: " + routingTable.toString();
+				responsePacket.setText(message);
+				this.sendPacket(responsePacket);
+			}
+			//defaultEquipment.receivePacket(responsePacket);
 		}
 		
 		
@@ -95,6 +104,7 @@ public class Router extends NetEquipment {
 				this.addEquipment(equipment);
 				equipment.addEquipment(this);				
 			}
+			this.associatedIps.addAll(equipment.getAllAssociatedIp());
 		}
 		
 	}
