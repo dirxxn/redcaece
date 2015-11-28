@@ -18,6 +18,6 @@ public abstract class PacketType {
     public abstract PacketType getResponse();
 
     public String toString(){
-        return this.getClass().toString();
+        return this.getClass().getSimpleName();
     }
 }
