@@ -63,7 +63,7 @@ public class Router extends NetEquipment {
 				RoutePacket routePacket = new RoutePacket(this.getAssociatedIp(), 
 						packet.getDestination(), packet.getServiceType(),packet.getTtl(), "", packet);
 				defaultEquipment.receivePacket(routePacket);
-				responsePacket.setText("No se puede enviar el paquete");
+				responsePacket.setText("Could not send the packet");
 				responsePacket.setServiceType(new Sendmsg());
 				this.sendPacket(responsePacket);
 			}
