@@ -1,5 +1,6 @@
 package Entities.Equipment;
 
+import java.util.HashMap;
 import java.util.Map;
 import Entities.Network.IPAddressV4;
 import Entities.Network.Network;
@@ -17,7 +18,7 @@ import Entities.Packages.Who;
  */
 public class Router extends NetEquipment {
 
-	private Map<Integer, IPAddressV4> routingTable;
+	private Map<Integer, IPAddressV4> routingTable = new HashMap<>();
 	private Integer defaultPort; // boca por defecto?
 	private NetworkOs operatingSystem;
 
@@ -59,6 +60,14 @@ public class Router extends NetEquipment {
 	public void receivePacket(Packet packet) {
 		// TODO Auto-generated method stub
 		
+		
+	}
+	
+	public void updateRoutingTable(int key, IPAddressV4 ip){
+		this.routingTable.put(key, ip);
+	}
+	
+	public void addIpAddressToRoutingTable(IPAddressV4 ip){
 		
 	}
 
