@@ -1,6 +1,6 @@
 package Entities.Equipment;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import Entities.Network.IPAddressV4;
 import Entities.Network.Network;
@@ -13,7 +13,7 @@ import Entities.Packages.*;
  */
 public class Router extends NetEquipment {
 
-	private Map<Integer, IPAddressV4> routingTable;
+	private Map<Integer, IPAddressV4> routingTable = new HashMap<>();
 	private Equipment defaultEquipment; // boca por defecto?
 	private NetworkOs operatingSystem;
 	private int maxConnections;
@@ -90,6 +90,14 @@ public class Router extends NetEquipment {
 			defaultEquipment.receivePacket(responsePacket);
 		}
 		
+		
+	}
+	
+	public void updateRoutingTable(int key, IPAddressV4 ip){
+		this.routingTable.put(key, ip);
+	}
+	
+	public void addIpAddressToRoutingTable(IPAddressV4 ip){
 		
 	}
 

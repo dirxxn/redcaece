@@ -22,8 +22,12 @@ public abstract class Equipment implements IMessaging {
 	}
 	
 	public void associateEquipment(Equipment equipment) throws AssociateEquipmentError{
+		this.addEquipment(equipment);
+		equipment.addEquipment(this);
+	}
+	
+	protected void addEquipment(Equipment equipment){
 		this.equipments.add(equipment);
-		equipment.equipments.add(this);
 	}
 
 }
