@@ -64,6 +64,7 @@ public class Router extends NetEquipment {
 						packet.getDestination(), packet.getServiceType(),packet.getTtl(), "", packet);
 				defaultEquipment.receivePacket(routePacket);
 				responsePacket.setText("No se puede enviar el paquete");
+				responsePacket.setServiceType(new Sendmsg());
 				this.sendPacket(responsePacket);
 			}
 		}else if(packet.getServiceType() instanceof Who){
@@ -71,9 +72,9 @@ public class Router extends NetEquipment {
 				String message = operatingSystem.getDataVersion();
 				message += " Route table: " + routingTable.toString();
 				responsePacket.setText(message);
+				responsePacket.setServiceType(new Sendmsg());
 				this.sendPacket(responsePacket);
 			}
-			//defaultEquipment.receivePacket(responsePacket);
 		}		
 	}
 	
