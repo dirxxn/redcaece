@@ -113,11 +113,11 @@ public class Router extends NetEquipment {
 	private boolean packetReceived(Packet packet){
 		boolean received = false;
 		for (Equipment equipment : equipments) {
-			for (Equipment e : equipment.equipments) {
-				if(e.getAssociatedIp().equals(packet.getDestination())){
+				if(equipment.getAssociatedIp().equals(packet.getDestination())){
 					received = true;
+					break;
 				} 
-			}
+			
 		}
 		return received;		
 	}
