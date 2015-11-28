@@ -34,7 +34,6 @@ public class Terminal extends Equipment {
 		this.ed = ed;
 	}
 
-
 	@Override
 	public void receivePacket(Packet packet) {
 		if(packet.getDestination().equals(associatedIp)){
@@ -64,6 +63,7 @@ public class Terminal extends Equipment {
 			}
 		}
 	}
+
 	public void sendPacket(IPAddressV4 destination, PacketType packetType) {
 		boolean exists = false;
 		Packet packet;
