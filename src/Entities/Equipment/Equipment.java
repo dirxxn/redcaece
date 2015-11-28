@@ -23,7 +23,7 @@ public abstract class Equipment implements IMessaging {
 	
 	public void associateEquipment(Equipment equipment) throws AssociateEquipmentError{
 		this.equipments.add(equipment);
-		equipment.associateEquipment(this);
+		equipment.equipments.add(this);
 	}
 
 }
