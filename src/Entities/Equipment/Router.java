@@ -1,19 +1,24 @@
 package Entities.Equipment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 import Entities.Network.IPAddressV4;
 import Entities.Network.Network;
 import Entities.Osystem.NetworkOs;
 import Entities.Osystem.OperatingSystem;
 import Entities.Packages.*;
+import Exceptions.AssociateEquipmentError;
 
 /**
  * Created by efridman on 14/11/15.
  */
 public class Router extends NetEquipment {
 
-	private Map<Integer, IPAddressV4> routingTable = new HashMap<>();
+	private NavigableMap<Integer, IPAddressV4> routingTable = new TreeMap<>();
 	private Equipment defaultEquipment; // boca por defecto?
 	private NetworkOs operatingSystem;
 	private int maxConnections;
@@ -29,7 +34,7 @@ public class Router extends NetEquipment {
 	}
 
 	public void updateRoutingTable(Integer port, IPAddressV4 newIp) {
-
+		this.routingTable.put(port, newIp);
 	}
 	
 	public void receivePaket(RoutePacket packet){
@@ -93,12 +98,40 @@ public class Router extends NetEquipment {
 		
 	}
 	
-	public void updateRoutingTable(int key, IPAddressV4 ip){
-		this.routingTable.put(key, ip);
+	
+	@Override
+	public void associateEquipment(Equipment equipment) throws AssociateEquipmentError{
+		
+		if(this.isConnNumberExceeded())
+		{
+			throw new AssociateEquipmentError();
+		}else{
+			
+			if(equipment instanceof Hub){
+				
+						if(!((Hub)equipment).isConnNumberExceeded()){
+									this.addEquipment(equipment);
+									equipment.addEquipment(this);
+									this.addNetToRoutingTable(equipment.getAssociatedIp());
+									
+						}else{
+							throw new AssociateEquipmentError();
+						}
+			}else{
+				this.addEquipment(equipment);
+				equipment.addEquipment(this);				
+			}
+		}
+		
 	}
 	
-	public void addIpAddressToRoutingTable(IPAddressV4 ip){
-		
+	private void addNetToRoutingTable(IPAddressV4 ip){
+		this.routingTable.put(this.getNextKey(), ip);
+	}
+	
+	private Integer getNextKey(){
+		 Entry <Integer, IPAddressV4> lastEntry = this.routingTable.lastEntry();
+		 return lastEntry == null ? 1 : lastEntry.getKey() + 1;
 	}
 
 }

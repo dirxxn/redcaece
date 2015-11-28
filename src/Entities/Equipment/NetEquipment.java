@@ -43,7 +43,7 @@ public abstract class NetEquipment extends Equipment{
 		
 	}
 	
-	private boolean isConnNumberExceeded(){
+	protected boolean isConnNumberExceeded(){
 		return this.equipments.size() > this.connectionsNumber;
 	}
 	
