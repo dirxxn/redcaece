@@ -1,16 +1,12 @@
 package Entities.Equipment;
 
+import java.util.ArrayList;
 import java.util.Map;
 import Entities.Network.IPAddressV4;
 import Entities.Network.Network;
 import Entities.Osystem.NetworkOs;
 import Entities.Osystem.OperatingSystem;
-import Entities.Packages.ICMPRequest;
-import Entities.Packages.ICMPResponse;
-import Entities.Packages.Packet;
-import Entities.Packages.RoutePacket;
-import Entities.Packages.Sendmsg;
-import Entities.Packages.Who;
+import Entities.Packages.*;
 
 /**
  * Created by efridman on 14/11/15.
@@ -18,8 +14,19 @@ import Entities.Packages.Who;
 public class Router extends NetEquipment {
 
 	private Map<Integer, IPAddressV4> routingTable;
-	private Integer defaultPort; // boca por defecto?
+	private Equipment defaultEquipment; // boca por defecto?
 	private NetworkOs operatingSystem;
+	private int maxConnections;
+	private ArrayList<Equipment> connectedEquipments;
+
+	public Router(){
+
+	}
+
+	public Router(Equipment defaultEquipment, NetworkOs os){
+		this.defaultEquipment = defaultEquipment;
+		this.operatingSystem = os;
+	}
 
 	public void updateRoutingTable(Integer port, IPAddressV4 newIp) {
 
@@ -57,7 +64,31 @@ public class Router extends NetEquipment {
 
 	@Override
 	public void receivePacket(Packet packet) {
-		// TODO Auto-generated method stub
+		if(packet instanceof RoutePacket){
+			if(connectedEquipments != null && connectedEquipments.size() > 0){
+				for(Equipment equipment : connectedEquipments){
+					if(equipment.associatedIp.sameNetwork(packet.getDestination())){
+						equipment.receivePacket(packet);
+						return;
+					}
+				}
+			}
+			defaultEquipment.receivePacket(packet);
+		}else if(packet.getServiceType() instanceof Who){
+			ServicePacket<Sendmsg> responsePacket = new ServicePacket<Sendmsg>(packet.getDestination(),packet.getSource(),new Sendmsg(),packet.getTtl() -1,"");
+			String message = operatingSystem.getDataVersion();
+			message += " Route table: " + routingTable.toString();
+			responsePacket.setText(message);
+			if(connectedEquipments != null && connectedEquipments.size() > 0){
+				for(Equipment equipment : connectedEquipments){
+					if(equipment.associatedIp.sameNetwork(packet.getDestination())){
+						equipment.receivePacket(responsePacket);
+						return;
+					}
+				}
+			}
+			defaultEquipment.receivePacket(responsePacket);
+		}
 		
 		
 	}
