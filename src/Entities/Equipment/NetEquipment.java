@@ -27,8 +27,17 @@ public abstract class NetEquipment extends Equipment{
 		{
 			throw new AssociateEquipmentError();
 		}else{
-			this.equipments.add(equipment);
-			equipment.associateEquipment(this);
+			
+			if(equipment instanceof NetEquipment){
+				if(!((NetEquipment)equipment).isConnNumberExceeded()){
+					this.equipments.add(equipment);
+					equipment.equipments.add(this);
+				}
+			}else{
+				this.equipments.add(equipment);
+				equipment.equipments.add(this);				
+			}
+			
 		}
 		
 	}
