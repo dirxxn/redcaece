@@ -36,32 +36,36 @@ public class Router extends NetEquipment {
 	}
 	
 	@Override
-	public void sendPacket(Packet<PacketType> packet) {
-		
-		for(Equipment equipment : this.equipments){
-			if(equipment.associatedIp.sameNetwork(packet.getDestination())){
-				equipment.receivePacket(packet);
-				return;
+	public void sendPacket(Packet packet) {
+		if(this.equipments != null && !this.equipments.isEmpty()) {
+			for (Equipment equipment : this.equipments) {
+				if (equipment.associatedIp.sameNetwork(packet.getDestination())) {
+					equipment.receivePacket(packet);
+					return;
+				}
 			}
 		}
 		
 	}
 
+
 	@Override
-	public void receivePacket(Packet<PacketType> packet) {
+	public void sendPacket(IPAddressV4 destination, PacketType packetType) {
+
+	}
+
+	@Override
+	public void receivePacket(Packet packet) {
 		if(packet instanceof RoutePacket){
-			if(this.equipments != null && !this.equipments.isEmpty()){
-				this.sendPacket(packet);
-			}
+			this.sendPacket(packet);
 			defaultEquipment.receivePacket(packet);
 		}else if(packet.getServiceType() instanceof Who){
-			ServicePacket<Sendmsg> responsePacket = new ServicePacket<Sendmsg>(packet.getDestination(),packet.getSource(),new Sendmsg(),packet.getTtl() -1,"");
+			ServicePacket responsePacket = new ServicePacket(packet.getDestination(),packet.getSource(),new Sendmsg(),packet.getTtl() -1,"");
 			String message = operatingSystem.getDataVersion();
 			message += " Route table: " + routingTable.toString();
 			responsePacket.setText(message);
-			if(this.equipments != null && !this.equipments.isEmpty()){
-				this.sendPacket(responsePacket);
-			}
+			this.sendPacket(responsePacket);
+
 			defaultEquipment.receivePacket(responsePacket);
 		}
 		

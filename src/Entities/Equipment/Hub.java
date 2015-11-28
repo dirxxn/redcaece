@@ -1,5 +1,6 @@
 package Entities.Equipment;
 
+import Entities.Network.IPAddressV4;
 import Entities.Packages.Packet;
 import Entities.Packages.PacketType;
 
@@ -14,14 +15,19 @@ public class Hub extends NetEquipment {
 	}
 	
 	@Override
-	public void sendPacket(Packet<PacketType> packet) {
+	public void sendPacket(Packet packet) {
 		for (Equipment equipment : equipments) {
 			equipment.receivePacket(packet);
 		}			
 	}
 
 	@Override
-	public void receivePacket(Packet<PacketType> packet) {
+	public void sendPacket(IPAddressV4 destination, PacketType packetType) {
+
+	}
+
+	@Override
+	public void receivePacket(Packet packet) {
 		this.sendPacket(packet);
 	}	
 	

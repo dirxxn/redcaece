@@ -1,5 +1,6 @@
 package Entities.Equipment;
 
+import Entities.Network.IPAddressV4;
 import Entities.Packages.Packet;
 import Entities.Packages.PacketType;
 import Exceptions.AssociateEquipmentError;
@@ -16,9 +17,10 @@ public abstract class NetEquipment extends Equipment{
 		this.connectionsNumber = connectionsNumber;
 	}
 	
-	public abstract void sendPacket(Packet<PacketType> packet);
+	public abstract void sendPacket(Packet packet);
+	public abstract void sendPacket(IPAddressV4 destination,PacketType packetType);
 
-	public abstract void receivePacket(Packet<PacketType> packet);
+	public abstract void receivePacket(Packet packet);
 	
 	@Override
 	public void associateEquipment(Equipment equipment) throws AssociateEquipmentError{

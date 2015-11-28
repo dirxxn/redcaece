@@ -5,7 +5,7 @@ import Entities.Network.IPAddressV4;
 /**
  * Created by efridman on 14/11/15.
  */
-public class RoutePacket<T> extends Packet<PacketType> {
+public class RoutePacket extends Packet {
 	private Packet packet;
 
 	public Packet getPacket() {

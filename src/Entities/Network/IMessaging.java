@@ -4,6 +4,7 @@ import Entities.Packages.*;
 
 public interface IMessaging {
 
-	void sendPacket(Packet<PacketType> packet);
-	void receivePacket(Packet<PacketType> packet);
+	void sendPacket(Packet packet);
+	void sendPacket(IPAddressV4 destination, PacketType packetType);
+	void receivePacket(Packet packet);
 }

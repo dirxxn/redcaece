@@ -3,9 +3,12 @@ package Entities.Equipment;
 import Entities.Osystem.TerminalOs;
 import Entities.Packages.*;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import Entities.Network.IPAddressV4;
+
+import javax.xml.ws.Service;
 
 /**
  * Created by efridman on 14/11/15.
@@ -33,7 +36,7 @@ public class Terminal extends Equipment {
 
 
 	@Override
-	public void receivePacket(Packet<PacketType> packet) {
+	public void receivePacket(Packet packet) {
 		if(packet.getDestination().equals(associatedIp)){
 			String message = "";
 			PacketType responseType = packet.getServiceType().getResponse();
@@ -41,7 +44,7 @@ public class Terminal extends Equipment {
 				if(responseType instanceof Who){
 					message = operatingSystem.getDataVersion();
 				}
-				Packet<PacketType> response = new ServicePacket<PacketType>(packet.getDestination(),packet.getSource(),responseType,packet.getTtl(),message);
+				Packet response = new ServicePacket(packet.getDestination(),packet.getSource(),responseType,packet.getTtl(),message);
 				sendPacket(response);
 			}else{
 				message = packet.getText();
@@ -54,10 +57,10 @@ public class Terminal extends Equipment {
 	}
 
 	@Override
-	public void sendPacket(Packet<PacketType> packet) {
+	public void sendPacket(Packet packet) {
 		
 		boolean exists = false;
-		Packet<PacketType> pktRequest = packet;
+		Packet pktRequest = packet;
 		for (Equipment equipment : equipments) {
 			if(equipment.associatedIp.sameNetwork(packet.getDestination())){
 				exists = true;
@@ -65,13 +68,33 @@ public class Terminal extends Equipment {
 			}
 		}		
 		if(!exists){
-			pktRequest = new RoutePacket<PacketType>(this.associatedIp, this.ed, packet.getServiceType(), 
+			pktRequest = new RoutePacket(this.associatedIp, this.ed, packet.getServiceType(),
 					this.operatingSystem.getTtl(),"", packet);	
 			
 		}		
 		for (Equipment equipment : equipments) {
 			equipment.receivePacket(pktRequest);
 		}		
+	}
+
+	@Override
+	public void sendPacket(IPAddressV4 destination, PacketType packetType) {
+		boolean exists = false;
+		Packet packet;
+		for (Equipment equipment : equipments) {
+			if(equipment.associatedIp.sameNetwork(destination)){
+				packet = new ServicePacket(this.associatedIp,destination,packetType,operatingSystem.getTtl(),"");
+				equipment.receivePacket(packet);
+				exists = true;
+			}
+		}
+
+		if(!exists){
+			packet = new ServicePacket(this.associatedIp,this.ed,packetType,operatingSystem.getTtl(),"");
+			RoutePacket routePacket = new RoutePacket(this.associatedIp, this.ed, packetType,
+					this.operatingSystem.getTtl(),"",packet);
+
+		}
 	}
 
 

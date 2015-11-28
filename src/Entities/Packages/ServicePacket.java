@@ -5,7 +5,7 @@ import Entities.Network.IPAddressV4;
 /**
  * Created by efridman on 14/11/15.
  */
-public class ServicePacket<T> extends Packet<PacketType> {
+public class ServicePacket extends Packet {
 
     public ServicePacket(PacketType serviceType){
         this.setServiceType(serviceType);
