@@ -1,8 +1,6 @@
 package Entities.Equipment;
 
-import Entities.Network.IPAddressV4;
 import Entities.Packages.Packet;
-import Entities.Packages.PacketType;
 import Exceptions.AssociateEquipmentError;
 
 public abstract class NetEquipment extends Equipment{

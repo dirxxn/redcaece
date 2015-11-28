@@ -11,7 +11,6 @@ public class Sendmsg extends PacketType {
 
 	@Override
 	public PacketType getResponse() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

@@ -2,13 +2,7 @@ package Entities.Equipment;
 
 import Entities.Osystem.TerminalOs;
 import Entities.Packages.*;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import Entities.Network.IPAddressV4;
-
-import javax.xml.ws.Service;
 
 /**
  * Created by efridman on 14/11/15.
