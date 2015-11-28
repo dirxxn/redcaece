@@ -26,7 +26,7 @@ public class Router extends NetEquipment {
 		this.defaultEquipment = defaultEquipment;
 		this.operatingSystem = os;
 	}
-
+	
 	public void updateRoutingTable(Integer port, IPAddressV4 newIp) {
 		this.routingTable.put(port, newIp);
 	}

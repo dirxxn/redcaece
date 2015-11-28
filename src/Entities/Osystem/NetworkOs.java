@@ -10,6 +10,13 @@ public class NetworkOs extends OperatingSystem{
         data = data + "Tipo: Network \n";
         return data;
     }
+    
+    public NetworkOs(){}
+    
+    public NetworkOs(String name, String version){
+    	this.name = name;
+    	this.version = version; 			
+    }
 
 	
 }

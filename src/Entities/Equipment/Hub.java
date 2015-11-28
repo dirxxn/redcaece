@@ -1,5 +1,6 @@
 package Entities.Equipment;
 
+import Entities.Network.IPAddressV4;
 import Entities.Packages.Packet;
 
 /**
@@ -10,6 +11,12 @@ public class Hub extends NetEquipment {
 	public Hub(int connectionsNumber) {
 		super();
 		this.connectionsNumber = connectionsNumber;
+	}
+	
+	public Hub(int connectionsNumber, IPAddressV4 associated) {
+		super();
+		this.connectionsNumber = connectionsNumber;
+		this.associatedIp = associated;
 	}
 	
 	@Override
