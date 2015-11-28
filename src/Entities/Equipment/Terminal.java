@@ -58,7 +58,7 @@ public class Terminal extends Equipment {
 
 	@Override
 	public void sendPacket(Packet packet) {
-		if (equipments != null && equipments.size() > 0) {
+		if (equipments != null && !equipments.isEmpty()) {
 			for (Equipment equipment : equipments) {
 				equipment.receivePacket(packet);
 			}
