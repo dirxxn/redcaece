@@ -58,10 +58,13 @@ public class Terminal extends Equipment {
 		}
 	}
 
-	public Terminal(){}
+	public Terminal(IPAddressV4 ip,TerminalOs operatingSystem){
+		super(ip);
+		this.operatingSystem = operatingSystem;
+	}
 	
-	public Terminal(TerminalOs operatingSystem, IPAddressV4 ed) {
-		super();
+	public Terminal(IPAddressV4 ip,TerminalOs operatingSystem, IPAddressV4 ed) {
+		super(ip);
 		this.operatingSystem = operatingSystem;
 		this.ed = ed;
 	}

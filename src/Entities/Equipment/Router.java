@@ -18,11 +18,12 @@ public class Router extends NetEquipment {
 	private NetworkOs operatingSystem;
 	
 
-	public Router(){
-
+	public Router(IPAddressV4 ip){
+		super(ip);
 	}
 
-	public Router(Equipment defaultEquipment, NetworkOs os){
+	public Router(IPAddressV4 ip, Equipment defaultEquipment, NetworkOs os){
+		super(ip);
 		this.defaultEquipment = defaultEquipment;
 		this.operatingSystem = os;
 	}

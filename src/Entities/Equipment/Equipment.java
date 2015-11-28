@@ -13,6 +13,12 @@ public abstract class Equipment implements IMessaging {
 	protected ArrayList<Equipment> equipments = new ArrayList<Equipment>();
 	protected IPAddressV4 associatedIp;
 
+	protected Equipment(IPAddressV4 ip){
+		this.associatedIp = ip;
+	}
+	protected Equipment(){
+	}
+
 	public IPAddressV4 getAssociatedIp() {
 		return associatedIp;
 	}
@@ -25,7 +31,8 @@ public abstract class Equipment implements IMessaging {
 		this.addEquipment(equipment);
 		equipment.addEquipment(this);
 	}
-	
+
+
 	protected void addEquipment(Equipment equipment){
 		this.equipments.add(equipment);
 	}	

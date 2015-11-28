@@ -1,11 +1,18 @@
 package Entities.Equipment;
 
+import Entities.Network.IPAddressV4;
 import Entities.Packages.Packet;
 import Exceptions.AssociateEquipmentError;
 
 public abstract class NetEquipment extends Equipment{
 
 	protected int connectionsNumber;
+
+	protected NetEquipment(IPAddressV4 ip) {
+		super(ip);
+	}
+	protected NetEquipment() {
+	}
 
 	public int getConnectionsNumber() {
 		return connectionsNumber;
