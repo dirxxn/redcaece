@@ -1,15 +1,10 @@
 package Entities.Equipment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 import Entities.Network.IPAddressV4;
-import Entities.Network.Network;
 import Entities.Osystem.NetworkOs;
-import Entities.Osystem.OperatingSystem;
 import Entities.Packages.*;
 import Exceptions.AssociateEquipmentError;
 
@@ -21,7 +16,7 @@ public class Router extends NetEquipment {
 	private NavigableMap<Integer, IPAddressV4> routingTable = new TreeMap<>();
 	private Equipment defaultEquipment; // boca por defecto?
 	private NetworkOs operatingSystem;
-	private ArrayList<IPAddressV4> associatedIps = new ArrayList<IPAddressV4>();
+	
 
 	public Router(){
 
@@ -60,25 +55,26 @@ public class Router extends NetEquipment {
 		ServicePacket responsePacket = new ServicePacket(packet.getDestination(),packet.getSource(),new Sendmsg(),packet.getTtl() -1,"");
 		
 		if(packet instanceof RoutePacket){
-			if (associatedIps.contains(packet.getDestination())){
+			if (packetReceived(packet)){
 				packet.setTtl(packet.getTtl() -1);
 				this.sendPacket(packet);
 			}
 			else{
+				RoutePacket routePacket = new RoutePacket(this.getAssociatedIp(), 
+						packet.getDestination(), packet.getServiceType(),packet.getTtl(), "", packet);
+				defaultEquipment.receivePacket(routePacket);
 				responsePacket.setText("No se puede enviar el paquete");
-				defaultEquipment.receivePacket(responsePacket);
+				this.sendPacket(responsePacket);
 			}
 		}else if(packet.getServiceType() instanceof Who){
-			if (associatedIps.contains(packet.getDestination())){
+			if (packetReceived(packet)){
 				String message = operatingSystem.getDataVersion();
 				message += " Route table: " + routingTable.toString();
 				responsePacket.setText(message);
 				this.sendPacket(responsePacket);
 			}
 			//defaultEquipment.receivePacket(responsePacket);
-		}
-		
-		
+		}		
 	}
 	
 	
@@ -104,7 +100,7 @@ public class Router extends NetEquipment {
 				this.addEquipment(equipment);
 				equipment.addEquipment(this);				
 			}
-			this.associatedIps.addAll(equipment.getAllAssociatedIp());
+			
 		}
 		
 	}
@@ -117,5 +113,16 @@ public class Router extends NetEquipment {
 		 Entry <Integer, IPAddressV4> lastEntry = this.routingTable.lastEntry();
 		 return lastEntry == null ? 1 : lastEntry.getKey() + 1;
 	}
-
+	
+	private boolean packetReceived(Packet packet){
+		boolean received = false;
+		for (Equipment equipment : equipments) {
+			for (Equipment e : equipment.equipments) {
+				if(e.getAssociatedIp().equals(packet.getDestination())){
+					received = true;
+				} 
+			}
+		}
+		return received;		
+	}
 }
