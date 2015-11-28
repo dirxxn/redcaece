@@ -31,7 +31,7 @@ public class Terminal extends Equipment {
 	@Override
 	public void receivePacket(Packet packet) {
 		if(packet.getDestination().equals(associatedIp)){
-			String message = "";
+			String message = packet.getText();
 			PacketType responseType = packet.getServiceType().getResponse();
 			if(packet.getServiceType().isRequest()){
 				if(responseType instanceof Who){
@@ -40,11 +40,10 @@ public class Terminal extends Equipment {
 				Packet response = new ServicePacket(packet.getDestination(),packet.getSource(),responseType,packet.getTtl(),message);
 				sendPacket(response);
 			}else{
-				message = packet.getText();
-				if(responseType instanceof ICMPResponse){
+				if(packet.getServiceType() instanceof ICMPResponse){
 					message = packet.toString();
 				}
-				System.out.println(String.format("La ip: %s recibio el mensaje '%s' de la ip: %s",this.associatedIp.toString(),packet.getText(), packet.getSource().toString()));
+				System.out.println(String.format("La ip: %s recibio el mensaje '%s' de la ip: %s",this.associatedIp.toString(),message, packet.getSource().toString()));
 
 			}
 		}
@@ -90,7 +89,7 @@ public class Terminal extends Equipment {
 
 		}
 
-		System.out.println(String.format("La ip: %s envio el mensaje '%s'",this.associatedIp.toString(),message));
+		System.out.println(String.format("La ip: %s envio el mensaje '%s'", this.associatedIp.toString(), message));
 	}
 
 

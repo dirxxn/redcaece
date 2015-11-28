@@ -2,6 +2,7 @@ package Main;
 
 import Entities.Equipment.*;
 import Entities.Osystem.*;
+import Entities.Packages.ICMPRequest;
 import Entities.Packages.Sendmsg;
 import Entities.Network.*;
 
@@ -78,7 +79,8 @@ public class Main {
 			router.associateEquipment(hub3);
 			
 			
-			serverHub1.sendPacket(ipDesktopHub1, new Sendmsg(),"Vamoooo");
+			serverHub1.sendPacket(ipDesktopHub1, new Sendmsg(), "Vamoooo");
+			serverHub1.sendPacket(ipDesktopHub1, new ICMPRequest(),"Larala");
 		}
 		catch(Exception ex){
 			

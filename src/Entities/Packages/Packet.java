@@ -51,4 +51,10 @@ public abstract class Packet{
 	public void setServiceType(PacketType serviceType) {
 		this.serviceType = serviceType;
 	}
+
+	public String toString(){
+		String message = String.format("Ip destino: %s, Ip origen: %s, tipo de servicio: %s, ttl: %d, mensaje: %s",destination.toString(),
+				source.toString(),serviceType.toString(),ttl,text);
+		return message;
+	}
 }
