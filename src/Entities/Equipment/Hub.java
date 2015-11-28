@@ -21,10 +21,6 @@ public class Hub extends NetEquipment {
 		}			
 	}
 
-	@Override
-	public void sendPacket(IPAddressV4 destination, PacketType packetType) {
-
-	}
 
 	@Override
 	public void receivePacket(Packet packet) {

@@ -58,26 +58,12 @@ public class Terminal extends Equipment {
 
 	@Override
 	public void sendPacket(Packet packet) {
-		
-		boolean exists = false;
-		Packet pktRequest = packet;
-		for (Equipment equipment : equipments) {
-			if(equipment.associatedIp.sameNetwork(packet.getDestination())){
-				exists = true;
-				break;
+		if (equipments != null && equipments.size() > 0) {
+			for (Equipment equipment : equipments) {
+				equipment.receivePacket(packet);
 			}
-		}		
-		if(!exists){
-			pktRequest = new RoutePacket(this.associatedIp, this.ed, packet.getServiceType(),
-					this.operatingSystem.getTtl(),"", packet);	
-			
-		}		
-		for (Equipment equipment : equipments) {
-			equipment.receivePacket(pktRequest);
-		}		
+		}
 	}
-
-	@Override
 	public void sendPacket(IPAddressV4 destination, PacketType packetType) {
 		boolean exists = false;
 		Packet packet;
@@ -93,6 +79,8 @@ public class Terminal extends Equipment {
 			packet = new ServicePacket(this.associatedIp,this.ed,packetType,operatingSystem.getTtl(),"");
 			RoutePacket routePacket = new RoutePacket(this.associatedIp, this.ed, packetType,
 					this.operatingSystem.getTtl(),"",packet);
+
+			this.sendPacket(routePacket);
 
 		}
 	}

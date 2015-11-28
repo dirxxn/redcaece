@@ -46,11 +46,6 @@ public class Router extends NetEquipment {
 
 
 	@Override
-	public void sendPacket(IPAddressV4 destination, PacketType packetType) {
-
-	}
-
-	@Override
 	public void receivePacket(Packet packet) {
 		ServicePacket responsePacket = new ServicePacket(packet.getDestination(),packet.getSource(),new Sendmsg(),packet.getTtl() -1,"");
 		

@@ -18,7 +18,6 @@ public abstract class NetEquipment extends Equipment{
 	}
 	
 	public abstract void sendPacket(Packet packet);
-	public abstract void sendPacket(IPAddressV4 destination,PacketType packetType);
 
 	public abstract void receivePacket(Packet packet);
 	
